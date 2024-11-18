@@ -52,7 +52,6 @@ public class VehiculeController {
                 vehiculeInterurbain.setCapacite(interurbainDTO.getCapacite());
                 vehiculeInterurbain.setTypeVehicule("INTERURBAIN");
                 vehicule = vehiculeService.saveVehicule(vehiculeInterurbain);
-
             } else {
                 return ResponseEntity.badRequest().body(null);
             }

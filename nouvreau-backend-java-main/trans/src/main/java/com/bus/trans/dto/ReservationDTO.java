@@ -1,39 +1,60 @@
 package com.bus.trans.dto;
 
-import java.util.Date;
-
 public class ReservationDTO {
-    private Long id;
-    private String numeroPlace;
-    private boolean estReservee;
-    private String nomPassager;
-    private String prenomPassager;
-    private Date dateNaissancePassager;
-    private Date dateReservation;
+
     private Long trajetId;
+    private Long seatId;
+    private String carteClient;
+    private String nom;
+    private String prenom;
+    private String dateNaissance;
 
     // Getters et Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getTrajetId() {
+        return trajetId;
+    }
 
-    public String getNumeroPlace() { return numeroPlace; }
-    public void setNumeroPlace(String numeroPlace) { this.numeroPlace = numeroPlace; }
+    public void setTrajetId(Long trajetId) {
+        this.trajetId = trajetId;
+    }
 
-    public boolean isEstReservee() { return estReservee; }
-    public void setEstReservee(boolean estReservee) { this.estReservee = estReservee; }
+    public Long getSeatId() {
+        return seatId;
+    }
 
-    public String getNomPassager() { return nomPassager; }
-    public void setNomPassager(String nomPassager) { this.nomPassager = nomPassager; }
+    public void setSeatId(Long seatId) {
+        this.seatId = seatId;
+    }
 
-    public String getPrenomPassager() { return prenomPassager; }
-    public void setPrenomPassager(String prenomPassager) { this.prenomPassager = prenomPassager; }
+    public String getCarteClient() {
+        return carteClient;
+    }
 
-    public Date getDateNaissancePassager() { return dateNaissancePassager; }
-    public void setDateNaissancePassager(Date dateNaissancePassager) { this.dateNaissancePassager = dateNaissancePassager; }
+    public void setCarteClient(String carteClient) {
+        this.carteClient = carteClient;
+    }
 
-    public Date getDateReservation() { return dateReservation; }
-    public void setDateReservation(Date dateReservation) { this.dateReservation = dateReservation; }
+    public String getNom() {
+        return nom;
+    }
 
-    public Long getTrajetId() { return trajetId; }
-    public void setTrajetId(Long trajetId) { this.trajetId = trajetId; }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(String dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
 }
