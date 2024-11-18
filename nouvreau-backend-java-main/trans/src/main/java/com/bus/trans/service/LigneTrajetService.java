@@ -37,26 +37,38 @@ public class LigneTrajetService {
         return ligneTrajetRepository.findByTypeLigne(typeLigne);
     }
 
+    // Nouvelle méthode pour obtenir toutes les lignes interurbaines
+    public List<LigneTrajetInterurbain> getAllInterurbainLignes() {
+        return ligneTrajetRepository.findByTypeLigne("INTERURBAIN").stream()
+                .filter(ligne -> ligne instanceof LigneTrajetInterurbain)
+                .map(ligne -> (LigneTrajetInterurbain) ligne)
+                .collect(Collectors.toList());
+    }
+
+    // Méthode pour obtenir les lignes interurbaines par date et destination
     public List<LigneTrajetInterurbain> getInterurbainLignesByDateAndDestination(LocalDate date, String destination) {
         LocalDateTime startDateTime = date.atStartOfDay();
         LocalDateTime endDateTime = date.plusDays(1).atStartOfDay();
-        return ligneTrajetRepository.findInterurbainByDestinationAndDate(destination, startDateTime, endDateTime);
+        return ligneTrajetRepository.findByTypeLigneAndLieuArriveeAndHeureDepartBetween(
+                "INTERURBAIN", destination, startDateTime, endDateTime);
     }
 
+    // Méthode pour obtenir les dates disponibles
     public List<LocalDate> getAvailableDates() {
-        List<LigneTrajetInterurbain> trajets = ligneTrajetRepository.findAllInterurbain();
-        return trajets.stream()
-                .map(trajet -> trajet.getHeureDepart().toLocalDate())
+        return ligneTrajetRepository.findByTypeLigne("INTERURBAIN").stream()
+                .map(ligne -> ((LigneTrajetInterurbain) ligne).getHeureDepart().toLocalDate())
                 .distinct()
                 .collect(Collectors.toList());
     }
 
+    // Méthode pour obtenir les destinations disponibles par date
     public List<String> getAvailableDestinationsByDate(LocalDate date) {
         LocalDateTime startDateTime = date.atStartOfDay();
         LocalDateTime endDateTime = date.plusDays(1).atStartOfDay();
-        List<LigneTrajetInterurbain> trajets = ligneTrajetRepository.findInterurbainByDate(startDateTime, endDateTime);
+        List<LigneTrajetInterurbain> trajets = ligneTrajetRepository.findByTypeLigneAndHeureDepartBetween(
+                "INTERURBAIN", startDateTime, endDateTime);
         return trajets.stream()
-                .map(LigneTrajetInterurbain::getVille)
+                .map(LigneTrajetInterurbain::getLieuArrivee)
                 .distinct()
                 .collect(Collectors.toList());
     }

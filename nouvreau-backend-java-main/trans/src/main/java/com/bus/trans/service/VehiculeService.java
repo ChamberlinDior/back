@@ -27,8 +27,12 @@ public class VehiculeService {
     public Vehicule saveVehicule(Vehicule vehicule) {
         if (vehicule instanceof VehiculeUrbain) {
             return vehiculeUrbainRepository.save((VehiculeUrbain) vehicule);
+        } else if (vehicule instanceof VehiculeInterurbain) {
+            return vehiculeRepository.save(vehicule);
+        } else {
+            // Gérer d'autres types de véhicules si nécessaire
+            return vehiculeRepository.save(vehicule);
         }
-        return vehiculeRepository.save(vehicule);
     }
 
     public Vehicule getVehiculeByImmatriculation(String immatriculation) {

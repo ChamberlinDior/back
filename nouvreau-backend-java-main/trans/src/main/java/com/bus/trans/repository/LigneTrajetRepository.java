@@ -3,8 +3,8 @@ package com.bus.trans.repository;
 import com.bus.trans.model.LigneTrajet;
 import com.bus.trans.model.LigneTrajetInterurbain;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,12 +13,11 @@ public interface LigneTrajetRepository extends JpaRepository<LigneTrajet, Long> 
 
     List<LigneTrajet> findByTypeLigne(String typeLigne);
 
-    @Query("SELECT l FROM LigneTrajetInterurbain l")
-    List<LigneTrajetInterurbain> findAllInterurbain();
+    // Méthode pour trouver les lignes interurbaines par destination et date
+    List<LigneTrajetInterurbain> findByTypeLigneAndLieuArriveeAndHeureDepartBetween(
+            String typeLigne, String lieuArrivee, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
-    @Query("SELECT l FROM LigneTrajetInterurbain l WHERE l.heureDepart BETWEEN :startDate AND :endDate")
-    List<LigneTrajetInterurbain> findInterurbainByDate(LocalDateTime startDate, LocalDateTime endDate);
-
-    @Query("SELECT l FROM LigneTrajetInterurbain l WHERE l.ville = :destination AND l.heureDepart BETWEEN :startDate AND :endDate")
-    List<LigneTrajetInterurbain> findInterurbainByDestinationAndDate(String destination, LocalDateTime startDate, LocalDateTime endDate);
+    // Méthode pour trouver les lignes interurbaines entre deux dates
+    List<LigneTrajetInterurbain> findByTypeLigneAndHeureDepartBetween(
+            String typeLigne, LocalDateTime startDateTime, LocalDateTime endDateTime);
 }
