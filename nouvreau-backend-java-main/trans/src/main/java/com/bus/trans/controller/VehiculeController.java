@@ -30,26 +30,37 @@ public class VehiculeController {
     public ResponseEntity<Vehicule> createVehicule(@RequestBody VehiculeDTO vehiculeDTO) {
         try {
             Vehicule vehicule;
+
             if ("URBAIN".equalsIgnoreCase(vehiculeDTO.getTypeVehicule())) {
+                // Création d'un véhicule urbain
                 VehiculeUrbainDTO urbainDTO = (VehiculeUrbainDTO) vehiculeDTO;
                 VehiculeUrbain vehiculeUrbain = new VehiculeUrbain();
                 vehiculeUrbain.setImmatriculation(urbainDTO.getImmatriculation());
                 vehiculeUrbain.setMarque(urbainDTO.getMarque());
                 vehiculeUrbain.setModele(urbainDTO.getModele());
                 vehiculeUrbain.setMacAddress(urbainDTO.getMacAddress());
+                vehiculeUrbain.setTypeVehicule("URBAIN");
                 vehicule = vehiculeService.saveVehicule(vehiculeUrbain);
-            } else {
+
+            } else if ("INTERURBAIN".equalsIgnoreCase(vehiculeDTO.getTypeVehicule())) {
+                // Création d'un véhicule interurbain
                 VehiculeInterurbainDTO interurbainDTO = (VehiculeInterurbainDTO) vehiculeDTO;
                 VehiculeInterurbain vehiculeInterurbain = new VehiculeInterurbain();
                 vehiculeInterurbain.setImmatriculation(interurbainDTO.getImmatriculation());
                 vehiculeInterurbain.setMarque(interurbainDTO.getMarque());
                 vehiculeInterurbain.setModele(interurbainDTO.getModele());
                 vehiculeInterurbain.setCapacite(interurbainDTO.getCapacite());
+                vehiculeInterurbain.setTypeVehicule("INTERURBAIN");
                 vehicule = vehiculeService.saveVehicule(vehiculeInterurbain);
+
+            } else {
+                return ResponseEntity.badRequest().body(null);
             }
             return ResponseEntity.ok(vehicule);
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
         }
     }
 }

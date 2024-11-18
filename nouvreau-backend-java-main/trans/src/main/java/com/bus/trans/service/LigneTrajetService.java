@@ -1,6 +1,5 @@
 package com.bus.trans.service;
 
-
 import com.bus.trans.model.LigneTrajet;
 import com.bus.trans.repository.LigneTrajetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +27,9 @@ public class LigneTrajetService {
 
     public void deleteLigne(Long id) {
         ligneTrajetRepository.deleteById(id);
+    }
+
+    public List<LigneTrajet> getLignesByType(String typeLigne) {
+        return ligneTrajetRepository.findByTypeLigne(typeLigne);
     }
 }

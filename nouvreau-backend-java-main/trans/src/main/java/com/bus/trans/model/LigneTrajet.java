@@ -3,7 +3,8 @@ package com.bus.trans.model;
 import jakarta.persistence.*;
 
 @Entity
-public class LigneTrajet {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class LigneTrajet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +19,9 @@ public class LigneTrajet {
     @Column(nullable = false)
     private String ville;
 
-    // Getters et setters
+    // Getters et Setters
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNomLigne() {
@@ -49,5 +46,9 @@ public class LigneTrajet {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

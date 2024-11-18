@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VehiculeService {
@@ -44,5 +45,19 @@ public class VehiculeService {
 
     public void deleteVehicule(Long id) {
         vehiculeRepository.deleteById(id);
+    }
+
+    public List<VehiculeInterurbain> getInterurbainVehicles() {
+        return vehiculeRepository.findAll().stream()
+                .filter(v -> v instanceof VehiculeInterurbain)
+                .map(v -> (VehiculeInterurbain) v)
+                .collect(Collectors.toList());
+    }
+
+    public List<VehiculeUrbain> getUrbainVehicles() {
+        return vehiculeRepository.findAll().stream()
+                .filter(v -> v instanceof VehiculeUrbain)
+                .map(v -> (VehiculeUrbain) v)
+                .collect(Collectors.toList());
     }
 }
